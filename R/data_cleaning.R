@@ -88,13 +88,3 @@ quantile(log_returns_std, probs = c(0.001, 0.999))
 write.csv(data_clean,
           "data/sp500_clean_data.csv",
           row.names = FALSE)
-
-
-
-
-
-
-
-
-
-

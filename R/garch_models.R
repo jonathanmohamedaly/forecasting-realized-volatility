@@ -144,6 +144,9 @@ roll_gjr_std <- ugarchroll(
   keep.coef = TRUE
 )
 
+saveRDS(roll_garch_std,  "data/roll_garch_std.rds")
+saveRDS(roll_egarch_std, "data/roll_egarch_std.rds")
+saveRDS(roll_gjr_std,    "data/roll_gjr_std.rds")
 
 # Extract forecasts
 extract_sigma <- function(roll_object, model_name) {

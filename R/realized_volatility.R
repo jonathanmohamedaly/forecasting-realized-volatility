@@ -1,5 +1,6 @@
 library(zoo)
 library(xts)
+library(ggplot2)
 
 data_clean <- read.csv("data/sp500_clean_data.csv")
 
@@ -47,10 +48,6 @@ write.csv(data_rv,
   "data/sp500_realized_volatility.csv",
   row.names = FALSE
 )
-
-
-
-library(ggplot2)
 
 ggplot(data_rv, aes(x = date)) +
   
