@@ -3,7 +3,7 @@ library(ggplot2)
 library(tidyr)
 library(dplyr)
 # Load data
-forecast_data <- read.csv("data/garch_forecasts.csv")
+forecast_data <- read.csv("data/forecast_data_with_har.csv")
 forecast_data <- na.omit(forecast_data)
 
 
@@ -13,7 +13,8 @@ models <- c(
   "VIX",
   "garch_std_vol",
   "egarch_std_vol",
-  "gjr_std_vol"
+  "gjr_std_vol",
+  "har_rv_vol"
 )
 
 
@@ -89,7 +90,8 @@ error_plot_data <- forecast_data %>%
     VIX = abs(rv_21d - VIX),
     GARCH = abs(rv_21d - garch_std_vol),
     EGARCH = abs(rv_21d - egarch_std_vol),
-    `GJR-GARCH` = abs(rv_21d - gjr_std_vol)
+    `GJR-GARCH` = abs(rv_21d - gjr_std_vol),
+    `HAR-RV` = abs(rv_21d - har_rv_vol)
   ) %>%
   pivot_longer(
     cols = -date,
@@ -105,7 +107,8 @@ ggplot(error_plot_data, aes(x = date, y = absolute_error, color = series)) +
       "VIX" = "#9467BD",
       "GARCH" = "#1F77B4",
       "EGARCH" = "#D62728",
-      "GJR-GARCH" = "#2CA02C"
+      "GJR-GARCH" = "#2CA02C",
+      "HAR-RV" = "#FF7F00"
     )
   ) +
   

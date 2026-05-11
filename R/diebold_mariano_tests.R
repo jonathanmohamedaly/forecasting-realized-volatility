@@ -3,18 +3,15 @@ library(tidyr)
 library(ggplot2)
 library(forecast)
 
-# ============================================================
-# Load forecast data
-# ============================================================
+# Load 
 
-forecast_data <- read.csv("data/garch_forecasts.csv")
+forecast_data <- read.csv("data/forecast_data_with_har.csv")
 forecast_data <- na.omit(forecast_data)
 
 forecast_data$date <- as.Date(forecast_data$date)
 
-# ============================================================
+
 # Loss functions
-# ============================================================
 
 squared_error <- function(actual, forecast) {
   (actual - forecast)^2
@@ -35,9 +32,8 @@ qlike_error <- function(actual, forecast) {
   log(forecast_var) + actual_var / forecast_var
 }
 
-# ============================================================
-# Diebold-Mariano helper
-# ============================================================
+
+# Diebold-Mariano 
 
 run_dm_test <- function(actual, forecast_1, forecast_2, model_1, model_2, loss_name) {
   
@@ -92,9 +88,8 @@ run_dm_test <- function(actual, forecast_1, forecast_2, model_1, model_2, loss_n
   )
 }
 
-# ============================================================
+
 # Model comparisons
-# ============================================================
 
 target <- forecast_data$rv_21d
 
@@ -102,7 +97,11 @@ comparisons <- list(
   c("VIX", "garch_std_vol"),
   c("VIX", "egarch_std_vol"),
   c("garch_std_vol", "egarch_std_vol"),
-  c("egarch_std_vol", "gjr_std_vol")
+  c("egarch_std_vol", "gjr_std_vol"),
+  c("har_rv_vol", "VIX"),
+  c("har_rv_vol", "garch_std_vol"),
+  c("har_rv_vol", "egarch_std_vol"),
+  c("har_rv_vol", "gjr_std_vol")
 )
 
 losses <- c("MSE", "MAE", "QLIKE")
@@ -143,9 +142,8 @@ write.csv(
   row.names = FALSE
 )
 
-# ============================================================
-# Plot DM statistics
-# ============================================================
+
+# Plot
 
 dm_plot_data <- dm_results %>%
   mutate(
